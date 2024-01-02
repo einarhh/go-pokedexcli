@@ -41,12 +41,12 @@ func (c *Cache) Get(key string) ([]byte, bool) {
 }
 
 func (c *Cache) reap(interval time.Duration) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	staleLimit := time.Now().UTC().Add(-interval)
 	for k, v := range c.cache {
 		if v.createdAt.Before(staleLimit) {
-			c.mu.Lock()
 			delete(c.cache, k)
-			c.mu.Unlock()
 		}
 	}
 }
