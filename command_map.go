@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func commandMap(cfg *config) error {
+func commandMap(cfg *config, parameters []string) error {
 	resp, err := cfg.pokeapiClient.ListLocationArea(cfg.nextLocationAreaUrl)
 	if err != nil {
 		return err
@@ -18,7 +18,7 @@ func commandMap(cfg *config) error {
 	return nil
 }
 
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, parameters []string) error {
 	if cfg.prevLocationAreaUrl == nil {
 		return errors.New("You are already at the beginning of the list")
 	}
